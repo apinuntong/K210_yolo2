@@ -1,0 +1,30 @@
+{
+    "model" : {
+        "architecture":         "MobileNet",
+        "input_size":           224,
+        "anchors":              [0.63,0.70, 1.03,1.39, 2.00,1.37, 2.76,2.19, 4.31,3.72],
+        "labels":               ["li"],
+        "coord_scale" : 		1.0,
+        "class_scale" : 		1.0,
+        "object_scale" : 		5.0,
+        "no_object_scale" : 	1.0
+    },
+    "pretrained" : {
+        "full":   				""
+    },
+    "train" : {
+        "actual_epoch":         100,
+        "train_image_folder":   "dataset_li2/dataset_li2/img224",
+        "train_annot_folder":   "dataset_li2/dataset_li2/ann224",
+        "train_times":          1,
+        "valid_image_folder":   "dataset_li2/dataset_li2/images_v",
+        "valid_annot_folder":   "dataset_li2/dataset_li2/annotations_v",
+        "valid_times":          1,
+        "batch_size":           16,
+        "learning_rate":        1e-4,
+        "saved_folder":   		"LIIII",
+        "first_trainable_layer": "",
+        "jitter":				true,
+        "is_only_detect" : 		false
+    }
+}
