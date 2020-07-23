@@ -5,6 +5,7 @@ from keras.layers import Reshape, Activation, Conv2D, Input, MaxPooling2D, Batch
 from keras.layers.advanced_activations import LeakyReLU
 from keras.layers.merge import concatenate
 from yolo.backend.utils.mobilenet_sipeed.mobilenet import MobileNet
+from keras.applications.mobilenet_v2 import MobileNetV2
 from keras.applications import InceptionV3
 from keras.applications.vgg16 import VGG16
 from keras.applications.resnet50 import ResNet50
@@ -26,6 +27,8 @@ def create_feature_extractor(architecture, input_size):
         feature_extractor = SqueezeNetFeature(input_size, weights)
     elif architecture == 'MobileNet':
         feature_extractor = MobileNetFeature(input_size, weights)
+    elif architecture == 'MobileNetV2':
+        feature_extractor = MobileNetV2Feature(input_size, weights)
     elif architecture == 'Full Yolo':
         feature_extractor = FullYoloFeature(input_size, weights)
     elif architecture == 'Tiny Yolo':
@@ -249,6 +252,24 @@ class MobileNetFeature(BaseFeatureExtractor):
             print("Loading weights success")
 
         x = mobilenet(input_image)
+        self.feature_extractor = Model(input_image, x)  
+
+    def normalize(self, image):
+        image = image / 255.
+        image = image - 0.5
+        image = image * 2.
+
+        return image		
+    
+class MobileNetV2Feature(BaseFeatureExtractor):
+    """docstring for ClassName"""
+    def __init__(self, input_size, weights=False):
+        input_image = Input(shape=(input_size, input_size, 3))
+        mobilenetv2 = MobileNetV2(input_shape=(224,224,3),alpha = 0.75, weights = "imagenet", classes = 1000, include_top=False)
+#         if weights:
+#             mobilenet.load_weights('mobilenet_7_5_224_tf_no_top.h5')
+#             print("Loading weights success")
+        x = mobilenetv2(input_image)
         self.feature_extractor = Model(input_image, x)  
 
     def normalize(self, image):
