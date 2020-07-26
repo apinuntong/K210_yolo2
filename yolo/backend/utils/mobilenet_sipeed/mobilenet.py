@@ -445,6 +445,9 @@ def _depthwise_conv_block(inputs, pointwise_conv_filters, alpha,
 
 ################################################################################V2
 ####################################################################################################################
+BASE_WEIGHT_PATHV2 = ('https://github.com/JonathanCMitchell/mobilenet_v2_keras/'
+                    'releases/download/v1.1/')
+
 def _make_divisible(v, divisor, min_value=None):
     if min_value is None:
         min_value = divisor
@@ -735,13 +738,13 @@ def MobileNetV2(input_shape=None,
         if include_top:
             model_name = ('mobilenet_v2_weights_tf_dim_ordering_tf_kernels_' +
                           str(alpha) + '_' + str(rows) + '.h5')
-            weight_path = BASE_WEIGHT_PATH + model_name
+            weight_path = BASE_WEIGHT_PATHV2 + model_name
             weights_path = keras_utils.get_file(
                 model_name, weight_path, cache_subdir='models')
         else:
             model_name = ('mobilenet_v2_weights_tf_dim_ordering_tf_kernels_' +
                           str(alpha) + '_' + str(rows) + '_no_top' + '.h5')
-            weight_path = BASE_WEIGHT_PATH + model_name
+            weight_path = BASE_WEIGHT_PATHV2 + model_name
             weights_path = keras_utils.get_file(
                 model_name, weight_path, cache_subdir='models')
         model.load_weights(weights_path)
