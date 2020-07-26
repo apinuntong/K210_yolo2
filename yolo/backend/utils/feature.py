@@ -5,11 +5,11 @@ from keras.layers import Reshape, Activation, Conv2D, Input, MaxPooling2D, Batch
 from keras.layers.advanced_activations import LeakyReLU
 from keras.layers.merge import concatenate
 from yolo.backend.utils.mobilenet_sipeed.mobilenet import MobileNet
-from keras.applications.mobilenet_v2 import MobileNetV2
+# from keras.applications.mobilenet_v2 import MobileNetV2
 from keras.applications import InceptionV3
 from keras.applications.vgg16 import VGG16
 from keras.applications.resnet50 import ResNet50
-
+from yolo.backend.utils.mobilenet_sipeed.mobilenet import MobileNetV2
 
 def create_feature_extractor(architecture, input_size):
     """
@@ -265,7 +265,7 @@ class MobileNetV2Feature(BaseFeatureExtractor):
     """docstring for ClassName"""
     def __init__(self, input_size, weights=False):
         input_image = Input(shape=(input_size, input_size, 3))
-        mobilenetv2 = MobileNetV2(input_shape=(224,224,3),alpha = 0.75, weights = "imagenet", classes = 1000, include_top=False)
+        mobilenetv2 = MobileNetV2(input_shape=(224,224,3),alpha = 0.75, weights = "imagenet", classes = 1000, include_top=False,backend=keras.backend,layers=keras.layers,models=keras.models,utils=keras.utils)
 #         if weights:
 #             mobilenet.load_weights('mobilenet_7_5_224_tf_no_top.h5')
 #             print("Loading weights success")
